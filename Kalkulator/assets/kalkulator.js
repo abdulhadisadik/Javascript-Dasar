@@ -13,7 +13,7 @@ function clearCalculator() {
   calculator.displayNumber = "0";
   calculator.operator = null;
   calculator.firstNumber = null;
-  clearCalculator.waitingForSecondNumber = false;
+  calculator.waitingForSecondNumber = false;
 }
 
 function inputDigit(digit) {
@@ -22,6 +22,44 @@ function inputDigit(digit) {
   } else {
     calculator.displayNumber += digit;
   }
+}
+
+//inverseNumber
+function InverseNumber() {
+  if (calculator.displayNumber === "0") {
+    return;
+  }
+  calculator.displayNumber *= -1;
+}
+
+//Menetapkan operator
+function handleOperator(operator) {
+  if (!calculator.waitingForSecondNumber) {
+    calculator.operator = operator;
+    calculator.waitingForSecondNumber = true;
+    calculator.firstNumber = calculator.displayNumber;
+    calculator.displayNumber = "0";
+  } else {
+    alert("Operator sudah ditetapkan");
+  }
+}
+
+//Melakukan operasi
+function performCalculation() {
+  if (calculator.firstNumber == null || calculator.operator == null) {
+    alert("Anda belum menetapkan operator");
+    return;
+  }
+  let result = 0;
+  if (calculator.operator === "+") {
+    result =
+      parseInt(calculator.firstNumber) + parseInt(calculator.displayNumber);
+  } else {
+    result =
+      parseInt(calculator.firstNumber) - parseInt(calculator.displayNumber);
+  }
+
+  calculator.displayNumber = result;
 }
 
 const buttons = document.querySelectorAll(".button");
@@ -53,6 +91,7 @@ for (let button of buttons) {
       handleOperator(target.innerText);
       return;
     }
+
     inputDigit(target.innerText);
     updateDisplay();
   });
