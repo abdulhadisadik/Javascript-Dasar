@@ -29,12 +29,30 @@ for (let button of buttons) {
   button.addEventListener("click", function (event) {
     //Mendapatkan objek elemen yang diklik
     const target = event.target;
+
+    // clear
     if (target.classList.contains("clear")) {
       clearCalculator();
       updateDisplay();
       return;
     }
 
+    if (target.classList.contains("negative")) {
+      InverseNumber();
+      updateDisplay();
+      return;
+    }
+
+    if (target.classList.contains("equals")) {
+      performCalculation();
+      updateDisplay();
+      return;
+    }
+
+    if (target.classList.contains("operator")) {
+      handleOperator(target.innerText);
+      return;
+    }
     inputDigit(target.innerText);
     updateDisplay();
   });
